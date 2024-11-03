@@ -1,0 +1,15 @@
+@use "style/_globals.scss";
+
+:root {
+  --spacing-sm: #{globals.$spacing-sm};
+  --spacing-base: #{globals.$spacing-base};
+  --spacing-lg: #{globals.$spacing-lg};
+}
+
+* {
+  &,
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
