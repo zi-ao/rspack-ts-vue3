@@ -1,0 +1,36 @@
+{
+  "name": "rspack-ts-vue3",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "simple-git-hooks",
+    "build": "cross-env NODE_ENV=production rspack build",
+    "check": "biome check --write",
+    "dev": "cross-env NODE_ENV=development rspack serve",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.3",
+    "@rspack/cli": "^1.0.14",
+    "@rspack/core": "^1.0.14",
+    "cross-env": "^7.0.3",
+    "lint-staged": "^15.2.10",
+    "simple-git-hooks": "^2.11.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "vue-loader": "^17.3.1"
+  },
+  "lint-staged": {
+    "*.{ts,ts,vue,js,jsx,css}": [
+      "biome check --write"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": [
+      "npx lint-staged"
+    ]
+  }
+}
