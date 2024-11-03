@@ -1,4 +1,5 @@
 @use "style/_globals.scss";
+@unocss;
 
 :root {
   --spacing-sm: #{globals.$spacing-sm};

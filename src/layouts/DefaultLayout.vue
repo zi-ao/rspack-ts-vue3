@@ -16,17 +16,38 @@
       </div>
     </div>
     <footer class="ld__footer">
-      <div class="ld__container">
-        123131
-      </div>
+      <n-flex justify="space-between" class="ld__container">
+        <div class="flex-auto">
+          123131
+        </div>
+        <n-switch
+          :value="isDark"
+          @update-value="toggleDark"
+        >
+          <template #checked-icon>
+            <n-icon>
+              <moon-outline />
+            </n-icon>
+          </template>
+
+          <template #unchecked-icon>
+            <n-icon>
+              <sunny-outline />
+            </n-icon>
+          </template>
+        </n-switch>
+      </n-flex>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
+import useDarkTheme from '@/composables/useDarkTheme';
+import { MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { useThemeVars } from 'naive-ui';
 
 const themeVars = useThemeVars();
+const { isDark, toggleDark } = useDarkTheme();
 </script>
 
 <style lang="scss">
@@ -54,6 +75,7 @@ $prefix-cls: "ld";
   }
 
   &__logo {
+    color: inherit;
     display: inline-block;
     max-width: 200px;
     height: 62px;
@@ -67,9 +89,8 @@ $prefix-cls: "ld";
   }
 
   &__footer {
-    padding-top: 18px;
-    padding-bottom: 18px;
-    min-height: 62px;
+    padding-top: var(--spacing-base);
+    padding-bottom: var(--spacing-base);
     border-top: 1px solid var(--border-color);
   }
 }

@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { defineConfig } from '@rspack/cli';
 import { type RspackPluginFunction, rspack } from '@rspack/core';
+import UnoCSS from '@unocss/postcss';
 import { config as dotenvConfig } from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
 import AutoImport from 'unplugin-auto-import/rspack';
@@ -79,6 +80,14 @@ export default defineConfig({
         test: /\.(sass|scss)$/,
         use: [
           {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [UnoCSS()],
+              },
+            },
+          },
+          {
             loader: 'sass-loader',
             options: {
               // 同时使用 `modern-compiler` 和 `sass-embedded` 可以显著提升构建性能
@@ -140,7 +149,19 @@ export default defineConfig({
       dts: _resolve('.temp/auto-imports.d.ts'),
     }),
     VueComponents({
-      resolvers: [NaiveUiResolver()],
+      resolvers: [
+        NaiveUiResolver(),
+        {
+          type: 'component',
+          resolve: (name) => {
+            if (name.match(/^(C[A-Z]|c-[a-z])/)) {
+              return {
+                from: `@/components/${name.replace(/([A-Za-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+              };
+            }
+          },
+        },
+      ],
       dts: _resolve('.temp/components.d.ts'),
     }),
   ],

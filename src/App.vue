@@ -2,17 +2,35 @@
   <n-config-provider
     abstract
     inline-theme-disabled
+    :theme="isDark ? darkTheme : null"
     :date-locale="dateZhCN"
     :locale="zhCN"
   >
     <n-global-style />
-    <component :is="DefaultLayout">
+    <c-layout :name="layoutName">
       <router-view />
-    </component>
+    </c-layout>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import { dateZhCN, zhCN } from 'naive-ui';
-import DefaultLayout from './layouts/DefaultLayout.vue';
+import { darkTheme, dateZhCN, zhCN } from 'naive-ui';
+
+const route = useRoute();
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
+
+const layoutName = ref('');
+
+watch(
+  () => route.path,
+  () => {
+    const currentLayoutName = route.meta?.layout;
+    if (!isNil(currentLayoutName) && currentLayoutName !== layoutName.value) {
+      layoutName.value = currentLayoutName;
+    }
+  },
+  { immediate: true },
+);
+provide('APP_DARK_THEME', { isDark, toggleDark });
 </script>
