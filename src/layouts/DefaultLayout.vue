@@ -1,7 +1,7 @@
 <template>
   <div
     class="ld__wrapper"
-    :style="`--border-color: ${themeVars.borderColor}`"
+    :style="{ '--border-color': themeVars.borderColor }"
   >
     <header class="ld__header">
       <nav class="ld__navbar ld__container">
@@ -121,12 +121,24 @@ const handleWindowResize = useDebounceFn(
   { maxWait: 100 },
 );
 
+let styleApplied = false;
 onBeforeMount(() => {
+  if (typeof document === 'undefined') return;
+
   handleWindowResize();
   window.addEventListener('resize', handleWindowResize, false);
+
+  document.body.style.setProperty(
+    '--nprogress-color',
+    themeVars.value.primaryColor,
+  );
+  styleApplied = true;
 });
 onUnmounted(() => {
-  window.removeEventListener('resize', handleWindowResize, false);
+  if (styleApplied) {
+    window.removeEventListener('resize', handleWindowResize, false);
+    document.body.style.removeProperty('--nprogress-color');
+  }
 });
 </script>
 

@@ -25,7 +25,7 @@ const layoutName = ref('');
 watch(
   () => route.path,
   () => {
-    const currentLayoutName = route.meta?.layout;
+    const currentLayoutName = route.meta.layout;
     if (!isNil(currentLayoutName) && currentLayoutName !== layoutName.value) {
       layoutName.value = currentLayoutName;
     }

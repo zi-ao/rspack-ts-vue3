@@ -1,5 +1,6 @@
 const layoutContext = import.meta.webpackContext('/src/layouts', {
   mode: 'lazy',
+  recursive: false,
   regExp: /^(?<!_).+\.vue$/,
 });
 
